@@ -55,16 +55,8 @@ class csslogin(Page):
 
     error_hint_loc = (By.CLASS_NAME, 'mess-content')
 
-    # 验证码错误
-    def captcha_error_hint(self):
-        return self.find_element(*self.error_hint_loc).text
-
-    # 用户名错误
-    def user_error_hint(self):
-        return self.find_element(*self.error_hint_loc).text
-
-    # 密码错误
-    def pw_error_hint(self):
+    # 验证码错误,用户名错误,密码错误
+    def error_hint(self):
         return self.find_element(*self.error_hint_loc).text
 
     # 登录成功,用户名一致
@@ -88,6 +80,7 @@ class omslogin(Page):
     css_login_pw_loc = (By.ID, 'un')
     css_login_captcha_loc = (By.NAME, 'captcha')
     css_login_button_loc = (By.CLASS_NAME, 'btn-login')
+    error_hint_loc = (By.CLASS_NAME, 'mess-content')
 
     # 登录用户名
     def login_username(self, username):
@@ -105,11 +98,36 @@ class omslogin(Page):
     def login_button(self):
         self.find_element(*self.css_login_button_loc).click()
 
-    # 统一登录入口
-    def customer_login(self, username='admin', password='123123',  captcha='zyd'):
+    # 单仓登录入口
+    def customer_login(self, username='C0001', password='000000',  captcha='zyd'):
         self.open()
         sleep(0.3)  # 防止偶尔admin输入不成功
         self.login_username(username)
         self.login_password(password)
         self.login_captcha(captcha)
         self.login_button()
+
+    # 多仓的时候选择仓库
+    def warehouse_login(self, warehouse):
+        house = {}  # 仓库代码->元素
+        whs = self.find_elements(By.CLASS_NAME, 'warehouse')
+        for wh in whs:
+            code = wh.get_attribute('data-id')  # 仓库代码
+            house[code] = wh
+        house[warehouse].click()
+
+    # 所有的错误弹窗信息如:提示客户被禁用错误,当前系统尚未为您分配任何可用仓库
+    def error_message(self):
+        return self.find_element(*self.error_hint_loc).text
+
+    # 登录成功,用户名一致
+    def oms_login_suc(self):
+        sleep(0.3)  # 防止登录成功浏览器没跳转过来
+        username = self.find_element(*(By.XPATH, '/html/body/div[1]/div/div/div[2]/span')).text
+        username = username.strip('客户代码： ')  # 中文:和空格
+        return username
+
+    # 登录成功,仓库一致
+    def warehouse_login_suc(self):
+        warehouse = self.find_element(*(By.XPATH, '/html/body/div[1]/div/div/div[2]/a[1]')).text
+        return warehouse

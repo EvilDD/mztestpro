@@ -7,8 +7,8 @@ class cusInfo(Bar):
     '''客户管理->客户资料界面'''
 
     def iframe_page(self):
-        '''进入客户资料的ifrme,点击新增'''
-        sleep(0.5)  # 等待程序读取到所有一级菜单
+        '''进入客户资料的ifrme'''
+        sleep(0.8)  # 等待程序读取到所有一级菜单
         self.navigationBar('客户管理').click()
         self.driver.implicitly_wait(5)
         self.secondNavBar('客户资料').click()
@@ -75,7 +75,6 @@ class cusInfo(Bar):
 
     newCus_loc = (By.ID, 'datagrid-row-r2-2-0')
     newCusCode_loc = (By.CLASS_NAME, 'datagrid-cell-c2-customer_code')
-    error_hint_loc = (By.CLASS_NAME, 'mess-content')
 
     # 选择最新的一个客户
     def choiceCustomer(self):
@@ -85,7 +84,7 @@ class cusInfo(Bar):
     def forbidden(self):
         self.buttonBar('禁用').click()
 
-    # 确认禁用
+    # 确认禁用/启用
     def comfirm(self):
         self.buttonBar('确定').click()
 
@@ -102,9 +101,13 @@ class cusInfo(Bar):
         code = self.find_element(*self.newCus_loc).find_element(*self.newCusCode_loc).text
         return code
 
-    # 提示客户被禁用错误
-    def customer_off_error(self):
-        return self.find_element(*self.error_hint_loc).text
-
     def using(self):
         self.buttonBar('启用').click()
+
+    # 启用客户流程
+    def usingCustomer(self):
+        self.iframe_page()
+        sleep(0.5)
+        self.choiceCustomer()
+        self.using()
+        self.comfirm()

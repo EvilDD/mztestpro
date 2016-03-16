@@ -65,10 +65,10 @@ class Bar(Page):
     '''智能返回一个iframe的定位'''
 
     def switchIframe(self, iframeName):
-        # 初步预计打开2个iframe,并保存iframe的url作为key和定位元素作为值
+        # 初步预计打开n个iframe,并保存iframe的url作为key和定位元素作为值
         iframes = {}
         self.driver.switch_to.default_content()  # 每次查找前先退出当前iframe
-        for i in range(2):
+        for i in range(3):  # 从1开始去除欢迎的iframe节约时间
             xpath = '/html/body/div[4]/div/div/div[2]/div[' + repr(i + 1) + ']/div/iframe'
             try:
                 Src = self.find_element(By.XPATH, xpath).get_attribute('src')

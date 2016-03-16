@@ -11,7 +11,7 @@ class cssloginTest(myunit.MyTest):
         username = 'abcdefggfedcba'
         self.css_login_verify(username=username)
         po = csslogin(self.driver)
-        self.assertEqual(po.user_error_hint(), '该用户不存在！')
+        self.assertEqual(po.error_hint(), '该用户不存在！')
         function.insert_img(self.driver, 'noUser.jpg')
 
     def test_csslogin2(self):
@@ -19,7 +19,7 @@ class cssloginTest(myunit.MyTest):
         password = '000000'
         self.css_login_verify(password=password)
         po = csslogin(self.driver)
-        self.assertEqual(po.pw_error_hint(), '密码错误！')
+        self.assertEqual(po.error_hint(), '密码错误！')
         function.insert_img(self.driver, 'password_err.jpg')
 
     def test_csslogin3(self):
@@ -27,7 +27,7 @@ class cssloginTest(myunit.MyTest):
         captcha = 'aaaaa'  # 不符合前台输入要求时，不弹窗
         self.css_login_verify(captcha=captcha)
         po = csslogin(self.driver)
-        self.assertEqual(po.captcha_error_hint(), '验证码输入不正确！')
+        self.assertEqual(po.error_hint(), '验证码输入不正确！')
         function.insert_img(self.driver, 'captcha_err.jpg')
 
     def test_csslogin4(self):
