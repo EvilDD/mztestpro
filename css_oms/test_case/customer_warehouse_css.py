@@ -33,7 +33,7 @@ class cusWareHouseTest(myunit.MyTest):
         'sjptbah',
         'sjqybah',
         text['i'],
-        text['k']
+        text['i']
     ]
 
     def loginDo(self):
@@ -49,6 +49,7 @@ class cusWareHouseTest(myunit.MyTest):
         self.oms_login_verify(username=self.newHouse[0])  # 新客户登陆oms
         self.assertEqual(omslogin(self.driver).oms_login_suc(), self.newHouse[0])
         self.assertEqual(omslogin(self.driver).warehouse_login_suc(), 'GZBY')
+        function.insert_img(self.driver, 'gzby_11111.jpg')  # 1代表仓库、电子口岸、代备案
 
     def test_wareHouse2(self):
         '''新客户分配GZBYBC仓,海关->元享,商检->智检'''
@@ -62,7 +63,22 @@ class cusWareHouseTest(myunit.MyTest):
         omslogin(self.driver).warehouse_login('GZBYBC')  # 选择仓库
         self.assertEqual(omslogin(self.driver).oms_login_suc(), self.newHouse[0])
         self.assertEqual(omslogin(self.driver).warehouse_login_suc(), 'GZBYBC')
-        sleep(5)
+        function.insert_img(self.driver, 'gzbybc_22111.jpg')
+
+    def test_wareHouse3(self):
+        '''HKSS仓,海关->电子口岸,商检->智检'''
+        self.loginDo()
+        self.newHouse[0] = self.db.consOderBy()  # 客户代码更改为最新客户
+        self.newHouse[1] = self.text['c']  # HKSS仓库
+        self.newHouse[2] = self.text['e']  # 口岸
+        self.newHouse[3] = self.text['h']  # 智检
+        self.po.addCusWarehouse(self.newHouse)  # 新客户添加仓库信息
+        self.oms_login_verify(username=self.newHouse[0])  # 新客户登陆oms
+        omslogin(self.driver).warehouse_login('HKSS')  # 选择仓库
+        self.assertEqual(omslogin(self.driver).oms_login_suc(), self.newHouse[0])
+        self.assertEqual(omslogin(self.driver).warehouse_login_suc(), 'HKSS')
+        function.insert_img(self.driver, 'gzbybc_21111.jpg')
+
 
 if __name__ == '__main__':
     unittest.main()

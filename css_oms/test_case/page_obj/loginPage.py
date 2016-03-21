@@ -11,7 +11,7 @@ class csslogin(Page):
     # 元素参数
     css_login_user_loc = (By.ID, 'username')
     css_login_pw_loc = (By.ID, 'un')
-    css_login_wh_loc = (By.XPATH, '//div[@class="logtxt dropdown"]/input')  # 仓库
+    css_login_wh_loc = (By.XPATH, '//div[@class="logtxt dropdown"]/input')  # 仓库phantomjs才能加载
 
     # 返回要选择仓库的loc
     def wh_choice(self, warehouse):

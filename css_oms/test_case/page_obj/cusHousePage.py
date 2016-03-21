@@ -25,26 +25,32 @@ class addWarehouse(Bar):
 
     # 电商平台
     def dspt(self, name):
+        self.find_element(By.NAME, 'platform_name').clear()
         self.find_element(By.NAME, 'platform_name').send_keys(name)
 
     # 海关企业注册号
     def hgqyzch(self, code):
+        self.find_element(By.NAME, 'hg_reg_no').clear()
         self.find_element(By.NAME, 'hg_reg_no').send_keys(code)
 
     # 海关平台备案号
     def hgptbah(self, code):
+        self.find_element(By.NAME, 'hg_platform_no').clear()
         self.find_element(By.NAME, 'hg_platform_no').send_keys(code)
 
     # 海关企业备案号
     def hgqybah(self, code):
+        self.find_element(By.NAME, 'hg_company_no').clear()
         self.find_element(By.NAME, 'hg_company_no').send_keys(code)
 
     # 商检平台备案号
     def sjptbah(self, code):
+        self.find_element(By.NAME, 'ciq_platform_no').clear()
         self.find_element(By.NAME, 'ciq_platform_no').send_keys(code)
 
     # 商检企业备案号
     def sjqybah(self, code):
+        self.find_element(By.NAME, 'ciq_company_no').clear()
         self.find_element(By.NAME, 'ciq_company_no').send_keys(code)
 
     # 定位返回所有有下拉框选项的元素
@@ -80,18 +86,24 @@ class addWarehouse(Bar):
     # 填写海关和商检的ftp
     def ftpWrite(self, cus, ciq):
         cus, ciq = self.ftpContent(cus, ciq)
-        self.find_element(By.NAME, 'hg_ftp_url').send_keys(cus[0])  # cus的ftp地址
-        self.find_element(By.NAME, 'hg_ftp_account').send_keys(cus[1])  # cus的ftp帐号
-        self.find_element(By.NAME, 'hg_ftp_password').send_keys(cus[2])  # cus的ftp密码
+        self.find_element(By.NAME, 'hg_ftp_url').clear()  # 清除cus的ftp地址
+        self.find_element(By.NAME, 'hg_ftp_account').clear()  # 清除cus的ftp帐号
+        self.find_element(By.NAME, 'hg_ftp_password').clear()  # 清除cus的ftp密码
+        self.find_element(By.NAME, 'hg_ftp_url').send_keys(cus[0])  # 填写cus的ftp地址
+        self.find_element(By.NAME, 'hg_ftp_account').send_keys(cus[1])  # 填写cus的ftp帐号
+        self.find_element(By.NAME, 'hg_ftp_password').send_keys(cus[2])  # 填写cus的ftp密码
 
-        self.find_element(By.NAME, 'ciq_ftp_url').send_keys(ciq[0])  # ciq的ftp地址
-        self.find_element(By.NAME, 'ciq_ftp_account').send_keys(ciq[1])  # ciq的ftp帐号
-        self.find_element(By.NAME, 'ciq_ftp_password').send_keys(ciq[2])  # ciq的ftp密码
+        self.find_element(By.NAME, 'ciq_ftp_url').clear()  # 清除ciq的ftp地址
+        self.find_element(By.NAME, 'ciq_ftp_account').clear()  # 清除ciq的ftp帐号
+        self.find_element(By.NAME, 'ciq_ftp_password').clear()  # 清除ciq的ftp密码
+        self.find_element(By.NAME, 'ciq_ftp_url').send_keys(ciq[0])  # 填写ciq的ftp地址
+        self.find_element(By.NAME, 'ciq_ftp_account').send_keys(ciq[1])  # 填写ciq的ftp帐号
+        self.find_element(By.NAME, 'ciq_ftp_password').send_keys(ciq[2])  # 填写ciq的ftp密码
 
     def selectOption(self, optionName):
         '''根据传入选项名字，自动选择'''
         options = {}
-        sleep(0.8)
+        sleep(0.8)  # 因为此处不是默认隐藏的元素
         optionEles = self.find_elements(By.CLASS_NAME, 'combobox-item')
         for optionEle in optionEles:
             options[optionEle.text] = optionEle

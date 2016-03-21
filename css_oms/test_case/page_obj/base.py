@@ -1,4 +1,7 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
 # from .base import urls
 '''各界面的url存放'''
 urls = {
@@ -50,8 +53,10 @@ class Bar(Page):
         menusName = {}  # 一级导航菜单按钮
         menus = self.find_elements(By.CLASS_NAME, 'panel-title')
         for menu in menus:
+            # WebDriverWait(self.driver, 5, 0.5).until(EC.element_to_be_clickable(menu))
+            # menu = WebDriverWait(self.driver, 5, 0.5).until(EC.element_to_be_clickable((By.CLASS_NAME, 'panel-title')))
+            # print(menu.text, menu.get_attribute('innerHTML'))
             menusName[menu.text] = menu
-            # print(menu.text)
         return menusName[barName]
 
     def secondNavBar(self, barName):
@@ -65,17 +70,14 @@ class Bar(Page):
     '''智能返回一个iframe的定位'''
 
     def switchIframe(self, iframeName):
-        # 初步预计打开n个iframe,并保存iframe的url作为key和定位元素作为值
-        iframes = {}
+        iframes = {}  # 所有打开的iframe
         self.driver.switch_to.default_content()  # 每次查找前先退出当前iframe
-        for i in range(3):  # 从1开始去除欢迎的iframe节约时间
-            xpath = '/html/body/div[4]/div/div/div[2]/div[' + repr(i + 1) + ']/div/iframe'
-            try:
-                Src = self.find_element(By.XPATH, xpath).get_attribute('src')
-                Name = self.find_element(By.XPATH, xpath)
-                iframes[Src] = Name
-            except:
-                pass
+        css = 'div.tabs-panels>div>div>iframe'
+        ifrEles = self.find_elements(By.CSS_SELECTOR, css)
+        for ifrEle in ifrEles:
+            Src = ifrEle.get_attribute('src')
+            iframes[Src] = ifrEle
+
         # 通过setting中的urls字典的values找到key
         key_list = []
         value_list = []
@@ -96,6 +98,7 @@ class Bar(Page):
             print('给的iframe名字在setting的url中无匹配')
 
     def buttonBar(self, barName):
+        sleep(0.8)  # 等待加载进iframe
         buttonName = {}  # frame页面中的小按钮
         buttons = self.find_elements(By.CLASS_NAME, 'l-btn-text')
         for button in buttons:

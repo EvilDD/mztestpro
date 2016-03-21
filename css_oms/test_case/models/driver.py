@@ -8,7 +8,7 @@ def browser():
     # dcap = dict(DesiredCapabilities.PHANTOMJS)
     # dcap["phantomjs.page.settings.userAgent"] = ("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) ""Gecko/20100101 Firefox/25.0")
     # driver = webdriver.PhantomJS()
-
+    # driver = webdriver.Firefox()
     driver = webdriver.Chrome()
 
     # host = '127.0.0.1:4444'  # 运行主机：默认端口号

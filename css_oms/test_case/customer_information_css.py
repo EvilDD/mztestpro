@@ -50,17 +50,17 @@ class cusInfoTest(myunit.MyTest):
     def test_customer2(self):
         '''禁用客户'''
         self.loginDo()
-        self.po.forbiCustomer()
+        self.po.forbiCustomer()  # 禁用客户
         username = self.po.offCusCode()
         self.oms_login_verify(username=username)
-        self.assertEqual(self.po.customer_off_error(), '该用户已被禁用！')
+        self.assertEqual(omslogin(self.driver).error_message(), '该用户已被禁用！')
         function.insert_img(self.driver, 'forbiCustomer.jpg')
 
     def test_customer3(self):
         '''启用客户'''
         self.loginDo()
-        self.po.usingCustomer()
-        username = self.po.offCusCode()
+        self.po.usingCustomer()  # 启用客户
+        username = self.po.offCusCode()  # 返回刚禁用客户代码
         self.oms_login_verify(username=username)
         if omslogin(self.driver).error_message() == '该用户已被禁用！':
             raise KeyError('启用按钮无效')

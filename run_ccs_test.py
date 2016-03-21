@@ -18,7 +18,7 @@ def send_mail(file_new):
     att["Content-Disposition"] = 'attachment;filename="testReult.html"'  # 任意邮件中显示的文件名
     msg.attach(att)
     # 构造内容
-    text = MIMEText("大家好,\n本邮件由系统自动发送,\n附件为这次自动化测试报告的结果, 请下载后查看!\n源码: https://github.com/EvilDD (mztestpro项目)")
+    text = MIMEText("大家好,\n本邮件由系统自动发送,\n附件为这次自动化测试报告的结果, 请下载后查看!\n源码分享: https://github.com/EvilDD (mztestpro项目)")
     msg.attach(text)
     # 加邮件头
     msgTos = (
@@ -59,11 +59,12 @@ if __name__ == '__main__':
                             title='清关系统',
                             description='环境：win8,浏览器：chrome'
                             )
+    runner = unittest.TextTestRunner()
+
     # discover = unittest.defaultTestLoader.discover('./css_oms/test_case', pattern='*_css.py')  # 无序运行
     testunit = unittest.TestSuite()
     for testcase in allTestNames:
         testunit.addTest(unittest.makeSuite(testcase))
-    runner = unittest.TextTestRunner()
 
     runner.run(testunit)
     fp.close()

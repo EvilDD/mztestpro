@@ -8,4 +8,5 @@ __all__ = [
     # 'page_obj',
     'login_css',
     'customer_information_css',
+    'customer_warehouse_css',
 ]
