@@ -63,7 +63,7 @@ class cusWareHouseTest(myunit.MyTest):
         omslogin(self.driver).warehouse_login('GZBYBC')  # 选择仓库
         self.assertEqual(omslogin(self.driver).oms_login_suc(), self.newHouse[0])
         self.assertEqual(omslogin(self.driver).warehouse_login_suc(), 'GZBYBC')
-        function.insert_img(self.driver, 'gzbybc_22111.jpg')
+        function.insert_img(self.driver, 'gzbybc_22211.jpg')
 
     def test_wareHouse3(self):
         '''HKSS仓,海关->电子口岸,商检->智检'''
@@ -77,7 +77,7 @@ class cusWareHouseTest(myunit.MyTest):
         omslogin(self.driver).warehouse_login('HKSS')  # 选择仓库
         self.assertEqual(omslogin(self.driver).oms_login_suc(), self.newHouse[0])
         self.assertEqual(omslogin(self.driver).warehouse_login_suc(), 'HKSS')
-        function.insert_img(self.driver, 'gzbybc_21111.jpg')
+        function.insert_img(self.driver, 'gzbybc_31211.jpg')
 
 
 if __name__ == '__main__':

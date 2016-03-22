@@ -50,9 +50,10 @@ class postgreSql:
         count = self.cur.fetchone()
         return count[0]
 
-    def consOderBy(self):
-        # 找出最后新增的客户代码
-        order = "SELECT customer_code FROM tbl_customer ORDER BY customer_code DESC"
+    def consOderBy(self, col='customer_code', table='tbl_customer'):
+        # 默认找出最后新增的客户代码
+        # 找出某张表某列倒序第一个数据
+        order = "SELECT %s FROM %s ORDER BY %s DESC" % (col, table, col)
         self.cur.execute(order)
         code = self.cur.fetchone()
         return code[0]
@@ -60,11 +61,12 @@ class postgreSql:
     def __del__(self):
         self.conn.close()
         del self.conn
-# a = postgreSql()
-# print(a.consOderBy())
+
 
 if __name__ == "__main__":
-    driver = webdriver.Chrome()
-    driver.get("http://www.baidu.com")
-    insert_img(driver, 'baidu.jpg')
-    driver.quit()
+    # driver = webdriver.Chrome()
+    # driver.get("http://www.baidu.com")
+    # insert_img(driver, 'baidu.jpg')
+    # driver.quit()
+    a = postgreSql()
+    print(type(a.consOderBy('product_sku', 'tbl_product')))

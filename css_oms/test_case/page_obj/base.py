@@ -10,7 +10,8 @@ urls = {
     '客户资料': 'http://zydong.newoms.com/admin/customer/customerData',
     '客户API': 'http://zydong.newoms.com/admin/customer/customerAPI',
     '客户交货仓': 'http://zydong.newoms.com/admin/customer/payWarehouse',
-    '添加客户交货仓': 'http://zydong.newoms.com/admin/customer/addPayWarehouse'
+    '添加客户交货仓': 'http://zydong.newoms.com/admin/customer/addPayWarehouse',
+    '商品新增': 'http://zydong.newoms.com/member/productManage/addProducts'
 }
 
 
@@ -95,7 +96,7 @@ class Bar(Page):
                 print('不存在' + iframeName + '的iframe')
                 return False
         else:
-            print('给的iframe名字在setting的url中无匹配')
+            print('给的iframe名字在basePage的url中无匹配')
 
     def buttonBar(self, barName):
         sleep(0.8)  # 等待加载进iframe

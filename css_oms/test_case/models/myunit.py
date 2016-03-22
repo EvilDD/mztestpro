@@ -12,7 +12,7 @@ class MyTest(unittest.TestCase):
         self.driver = browser()
         self.driver.implicitly_wait(10)
         # self.driver.set_window_size(1000, 900)
-        # self.driver.maximize_window()
+        self.driver.maximize_window()  # phantomjs不设置全屏,默认小屏读取不到页面元素
 
     def css_login_verify(self, username='admin', password='123123', warehouse='广州白云---GZBY', captcha='zyd'):
         '''css公共登录模块'''

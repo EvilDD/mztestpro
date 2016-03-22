@@ -50,7 +50,7 @@ class addWarehouse(Bar):
 
     # 商检企业备案号
     def sjqybah(self, code):
-        self.find_element(By.NAME, 'ciq_company_no').clear()
+        # self.find_element(By.NAME, 'ciq_company_no').clear()#商检与海关都走电子口岸,此处自动填充与海关一致不容更改
         self.find_element(By.NAME, 'ciq_company_no').send_keys(code)
 
     # 定位返回所有有下拉框选项的元素

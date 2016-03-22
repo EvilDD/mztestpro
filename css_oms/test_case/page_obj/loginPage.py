@@ -101,7 +101,7 @@ class omslogin(Page):
     # 单仓登录入口
     def customer_login(self, username='C0001', password='000000',  captcha='zyd'):
         self.open()
-        sleep(0.3)  # 防止偶尔admin输入不成功
+        sleep(0.3)  # 防止偶尔客户代码输入不成功
         self.login_username(username)
         self.login_password(password)
         self.login_captcha(captcha)

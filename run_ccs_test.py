@@ -22,12 +22,12 @@ def send_mail(file_new):
     msg.attach(text)
     # 加邮件头
     msgTos = (
-        '243435508@qq.com',
+        '447959115@qq.com',
         'yadong.zhou@56100.com',
-        '1992349278@qq.com',
-        '447959115@qq.com'
-    )
-    msg['from'] = 'zydsyu@sina.cn'
+        '243435508@qq.com',
+    )  # 发送地址
+    msg['to'] = ';'.join(msgTos)  # 收件栏显示
+    msg['from'] = 'zydsyu@sina.cn'  # 发件栏显示
     msg['subject'] = '【测试报告】自动化测试报告'
 
     # 发邮件
@@ -36,9 +36,7 @@ def send_mail(file_new):
         server.connect('smtp.sina.cn')
         password = input("输入邮箱密码:")
         server.login('zydsyu@sina.cn', password)
-        for msgTo in msgTos:
-            print(msgTo)
-            server.sendmail(msg['from'], msgTo, msg.as_string())
+        server.sendmail(msg['from'], msgTos, msg.as_string())
         server.quit()
     except Exception as e:
         print(e)
