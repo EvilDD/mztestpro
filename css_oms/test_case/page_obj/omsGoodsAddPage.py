@@ -137,3 +137,7 @@ class addProuct(Bar):
         self.oriCountry()
         self.hgCode()
         self.save()
+
+    # 商品sku已存在
+    def existSku(self):
+        return self.find_element(By.CLASS_NAME, 'mess-content').text

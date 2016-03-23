@@ -33,7 +33,7 @@ class cusInfoTest(myunit.MyTest):
         customerCode = self.po.cusCode()
         if customerCode == '' or self.db.isConsExist(customerCode):
             function.insert_img(self.driver, 'add_customer_exist.jpg')
-            raise NameError("该客户代码已存在或者客户代码为空")
+            raise AssertionError("该客户代码已存在或者客户代码为空")  # assert显示失败为F,其他异常为E
         else:
             print(customerCode)
 
@@ -63,7 +63,7 @@ class cusInfoTest(myunit.MyTest):
         username = self.po.offCusCode()  # 返回刚禁用客户代码
         self.oms_login_verify(username=username)
         if omslogin(self.driver).error_message() == '该用户已被禁用！':
-            raise KeyError('启用按钮无效')
+            raise AssertionError('启用按钮无效')
             function.insert_img('startCustomer_err.jpg')
         else:
             print(omslogin(self.driver).error_message())

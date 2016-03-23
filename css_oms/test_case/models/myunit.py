@@ -19,7 +19,7 @@ class MyTest(unittest.TestCase):
         csslogin(self.driver).admin_login(username, password, warehouse, captcha)
 
     def oms_login_verify(self, username='C0001', password='000000', captcha='zyd'):
-        '''oms公共登录模块'''
+        '''oms公共登录模块,登录后需要选择仓库'''
         omslogin(self.driver).customer_login(username, password, captcha)
 
     def tearDown(self):
