@@ -26,31 +26,27 @@ class excel(object):
         dataPath = os.path.dirname(casePath)
         self.file = dataPath + '\\data\\' + fileName
 
-    def getDataPosition(self):
-        '''获取表格列表名称,保存第一列数据位置,字典形式,商品sku:(1,0)代表sku值的位置'''
+    def getDataPosVal(self):
+        '''获取表格数据,字典形式保存,名称+行:(列,值)代表数据位置'''
         try:
             data = open_workbook(self.file)  # formatting_info=True保留数据格式
         except Exception as e:
             print(e, '获取%s文件失败' % self.file)
         table = data.sheets()[0]  # 通过索引获取第一张sheet表
         excelDict = OrderedDict()  # 创建一个有序的字典存放数据在第几行和对应值
-        for row in range(table.nrows):  # 有几行数据就循环几次
-            rowsData = table.row_values(row)  # 读取所有的整行数据
+        for row in range(table.nrows):
+            rowsData = table.row_values(0)  # 读取第一行名称数据
             for col in range(table.ncols):
-                print(rowsData[col] + repr(row))
-                excelDict[rowsData[col] + repr(row)] = [col, table.cell(row, col).value]  # 多行数据
-        for a, b in excelDict.items():
-            print(a, b)
+                excelDict[rowsData[col] + repr(row)] = [(row, col), table.cell(row, col).value]  # 多行数据显示
         return excelDict
 
-    def creatExcel(self):
+    def creatExcel(self, posVal):
+        # posVal = self.getDataPosVal()
+        # posVal['商品SKU1'][1] = '更改'
         wb = Workbook()
-        ws = wb.add_sheet('Sheet1')
-        col = self.getDataPosition()
-        print(col['商品SKU'])
-        # ws.write(1, 0, 'proskutest')
-        for a, b in col.items():
-            print(a, b)
+        ws = wb.add_sheet('Sheet11')
+        for posVal in posVal.values():
+            ws.write(posVal[0][0], posVal[0][1], posVal[1])  # row,col,value
         wb.save(self.file)
 
 

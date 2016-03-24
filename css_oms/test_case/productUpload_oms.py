@@ -22,7 +22,9 @@ class productAdd(myunit.MyTest):
         # function.insert_img(self.driver, '2222222222.jpg')
         # sleep(10)
         a = function.excel('product_import.xls')
-        a.getDataPosition()
+        posVal = a.getDataPosVal()
+        posVal['商品SKU1'][1] = '睡觉'
+        a.creatExcel(posVal)
 
 if __name__ == '__main__':
     unittest.main()
