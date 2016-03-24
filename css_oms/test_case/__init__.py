@@ -9,4 +9,6 @@ __all__ = [
     'login_css',
     'customer_information_css',
     'customer_warehouse_css',
+    'productAdd_oms',
+    'productUpload_oms',
 ]

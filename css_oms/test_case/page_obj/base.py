@@ -11,7 +11,8 @@ urls = {
     '客户API': 'http://zydong.newoms.com/admin/customer/customerAPI',
     '客户交货仓': 'http://zydong.newoms.com/admin/customer/payWarehouse',
     '添加客户交货仓': 'http://zydong.newoms.com/admin/customer/addPayWarehouse',
-    '商品新增': 'http://zydong.newoms.com/member/productManage/addProducts'
+    '商品新增': 'http://zydong.newoms.com/member/productManage/addProducts',
+    '商品批量上传': 'http://zydong.newoms.com/member/productManage/productUpload',
 }
 
 

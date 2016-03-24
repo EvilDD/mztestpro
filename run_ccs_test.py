@@ -54,10 +54,10 @@ if __name__ == '__main__':
     filename = './css_oms/report/' + now + 'result.html'
     fp = open(filename, 'wb')
     runner = HTMLTestRunner(stream=fp,
-                            title='清关系统',
+                            title='清关系统简略测试',
                             description='环境：win8,浏览器：chrome'
                             )
-    runner = unittest.TextTestRunner()
+    # runner = unittest.TextTestRunner()
 
     # discover = unittest.defaultTestLoader.discover('./css_oms/test_case', pattern='*_css.py')  # 无序运行
     testunit = unittest.TestSuite()
@@ -67,4 +67,4 @@ if __name__ == '__main__':
     runner.run(testunit)
     fp.close()
     file_path = new_report('./css_oms/report/')
-    # send_mail(file_path)
+    send_mail(file_path)
