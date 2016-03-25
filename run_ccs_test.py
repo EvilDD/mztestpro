@@ -35,8 +35,7 @@ def send_mail(file_new):
     try:
         server = smtplib.SMTP()
         server.connect('smtp.sina.cn')
-        # password = input("输入邮箱密码:")
-        password = 'MFKGOGAI,.520'
+        password = input("输入邮箱密码:")
         server.login('zydsyu@sina.cn', password)
         server.sendmail(msg['from'], msgTos, msg.as_string())
         server.quit()
