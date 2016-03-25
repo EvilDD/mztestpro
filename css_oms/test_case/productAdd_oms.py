@@ -6,7 +6,7 @@ from page_obj.loginPage import omslogin
 
 
 class productAdd(myunit.MyTest):
-    '''oms商品新增用例,此次商品均为代备案模式'''
+    '''oms商品管理->商品新增'''
     proList = {
         'product_sku': '',
         'product_name': 'proName',
@@ -35,7 +35,8 @@ class productAdd(myunit.MyTest):
         self.po = addProuct(self.driver)
 
     def test1(self):
-        '''添加新商品'''
+        '''添加商品'''
+        '''客户商品代备案'''
         self.loginDo()
         omslogin(self.driver).warehouse_login('GZBY')  # 选择仓库完全登录
         proNums1 = self.db.tableCount('tbl_product')  # 添加前商品条数
@@ -48,7 +49,8 @@ class productAdd(myunit.MyTest):
         function.insert_img(self.driver, 'oms_add_product.jpg')
 
     def test2(self):
-        '''添加当前仓库已存在的商品sku,提示sku已存在'''
+        '''添加已存在商品sku'''
+        '''必须是当前仓库已存在'''
         self.loginDo()
         omslogin(self.driver).warehouse_login('GZBY')  # 选择仓库完全登录
         sku = self.db.consOderBy('product_sku', 'tbl_product')  # 刚新增产品的sku
@@ -58,6 +60,7 @@ class productAdd(myunit.MyTest):
         function.insert_img(self.driver, 'exist_product_sku.jpg')
 
     def test3(self):
+        '''BC仓添加BBC仓已存在商品'''
         '''GZBYBC添加GZBY已存在的商品sku,可添加成功,海关商品备案号为行邮税号'''
         self.loginDo()
         omslogin(self.driver).warehouse_login('GZBYBC')  # 选择仓库完全登录
@@ -72,6 +75,7 @@ class productAdd(myunit.MyTest):
         function.insert_img(self.driver, 'GZBYBC_add_exist_sku.jpg')
 
     def test4(self):
+        '''BC仓添加BC仓已存在商品'''
         '''HKSS添加GZBYBC已存在的商品sku,提示sku已存在'''
         self.loginDo()
         omslogin(self.driver).warehouse_login('HKSS')  # 选择仓库完全登录

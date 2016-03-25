@@ -17,6 +17,15 @@ def insert_img(driver, file_name):
     driver.get_screenshot_as_file(file_path)  # 截屏
 
 
+def stringAddOne(string):
+    '''输入一个字符串,返回一个新的+1字符串'''
+    num = re.search('\d*$', string).group(0)
+    num = '0' if num == '' else num
+    num = repr(int(num) + 1)
+    newString = re.sub('\d*$', num, string)
+    return newString
+
+
 class excel(object):
     '''操作excel表格'''
 
@@ -41,6 +50,7 @@ class excel(object):
         return excelDict
 
     def creatExcel(self, posVal):
+        '''创建一分相同数据表格替代原表格'''
         # posVal = self.getDataPosVal()
         # posVal['商品SKU1'][1] = '更改'
         wb = Workbook()
@@ -98,8 +108,8 @@ class postgreSql(object):
                 num += '0'
             else:
                 num = num_add
-        newNum = re.sub('\d*$', num, sku)
-        return newNum
+        newString = re.sub('\d*$', num, sku)
+        return newString
 
     def __del__(self):
         self.conn.close()
@@ -109,35 +119,3 @@ class postgreSql(object):
 if __name__ == "__main__":
     a = postgreSql()
     print(a.proStringNo('product_sku', 'tbl_product'))
-
-a = {
-    '海关商品备案号': '1232556',
-    '品牌': '品牌',
-    '商品单位': '瓶',
-    '商品链接': 'http://www.google.com',
-    '条码类型': '默认条码',
-    '规格型号': '15*12',
-    '行邮税号': '01000000',
-    'CIQ商检备案号': 562159.0,
-    '商品净重': 1.2,
-    '备注': 'beizhu1',
-    '有无保质期': '有',
-    '商品条码': 'C250-123456789',
-    '原产国': '阿根廷',
-    '包装规格': '',
-    '商品分类': '保健护理用品',
-    '商品货号': '',
-    '申报价格': 12.1,
-    '商品SKU': '123456780',
-    '国际编码': '',
-    '包装种类': '4M(纸箱)',
-    '商品名称': '111',
-    '是否礼品': '否',
-    '申报币种': 'RMB',
-    '商品毛重': 1.2,
-    '商品英文名称': 'abc',
-    '体积（平方米）': '',
-    '海关编码': '0106311000',
-    '海关品名': '品名',
-    '生产厂家': '厂家'
-}

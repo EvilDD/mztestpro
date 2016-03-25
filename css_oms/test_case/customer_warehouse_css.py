@@ -6,7 +6,8 @@ from page_obj.loginPage import omslogin
 
 
 class cusWareHouseTest(myunit.MyTest):
-    '''新客户分配交货仓,默认GZBY仓,海关->电子口岸,商检->电子口岸,代备案都为是'''
+    '''css客户管理->客户交货仓'''
+    '''基于最新添加的用户操作'''
     text = {
         'a': '广州白云',
         'b': '广州机场快件处理中心',
@@ -42,7 +43,8 @@ class cusWareHouseTest(myunit.MyTest):
         self.po = addWarehouse(self.driver)
 
     def test_wareHouse1(self):
-        '''新客户分配默认配置,上面大用例模块介绍,未强调为默认值'''
+        '''客户分配GZBY仓'''
+        '''海关->口岸,商检->口岸,商品、订单->代备案'''
         self.loginDo()
         self.newHouse[0] = self.db.consOderBy()  # 客户代码更改为最新客户
         self.po.addCusWarehouse(self.newHouse)  # 新客户添加GZBY仓库
@@ -52,7 +54,8 @@ class cusWareHouseTest(myunit.MyTest):
         function.insert_img(self.driver, 'gzby_11111.jpg')  # 1代表仓库、电子口岸、代备案
 
     def test_wareHouse2(self):
-        '''新客户分配GZBYBC仓,海关->元享,商检->智检'''
+        '''客户分配GZBYBC仓'''
+        '''海关->元亨,商检->智检,商品、订单->代备案'''
         self.loginDo()
         self.newHouse[0] = self.db.consOderBy()  # 客户代码更改为最新客户
         self.newHouse[1] = self.text['b']  # GZBYBC仓库
@@ -66,7 +69,8 @@ class cusWareHouseTest(myunit.MyTest):
         function.insert_img(self.driver, 'gzbybc_22211.jpg')
 
     def test_wareHouse3(self):
-        '''HKSS仓,海关->电子口岸,商检->智检'''
+        '''客户分配HKSS仓'''
+        '''海关->口岸,商检->智检,商品、订单->代备案'''
         self.loginDo()
         self.newHouse[0] = self.db.consOderBy()  # 客户代码更改为最新客户
         self.newHouse[1] = self.text['c']  # HKSS仓库

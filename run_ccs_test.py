@@ -22,6 +22,7 @@ def send_mail(file_new):
     msg.attach(text)
     # 加邮件头
     msgTos = (
+        '996758689@qq.com',
         '447959115@qq.com',
         'yadong.zhou@56100.com',
         '243435508@qq.com',
@@ -34,7 +35,8 @@ def send_mail(file_new):
     try:
         server = smtplib.SMTP()
         server.connect('smtp.sina.cn')
-        password = input("输入邮箱密码:")
+        # password = input("输入邮箱密码:")
+        password = 'MFKGOGAI,.520'
         server.login('zydsyu@sina.cn', password)
         server.sendmail(msg['from'], msgTos, msg.as_string())
         server.quit()

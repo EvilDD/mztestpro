@@ -6,7 +6,7 @@ from page_obj.loginPage import omslogin
 
 
 class cusInfoTest(myunit.MyTest):
-    '''admin-GZBY创建新客户'''
+    '''css客户管理->客户资料'''
 
     newCus = [
         'Evil',
@@ -25,8 +25,8 @@ class cusInfoTest(myunit.MyTest):
         self.css_login_verify()
         self.po = cusInfo(self.driver)
 
-    def test_customer0(self):
-        '''新增时客户代码不为空, 且数据库中不存在该客户代码'''
+    def test1(self):
+        '''新增客户,自动填充客户代码'''
         self.loginDo()
         self.po.iframe_page()  # 客户资料iframe界面
         self.po.newPage()  # 点击新增
@@ -34,11 +34,9 @@ class cusInfoTest(myunit.MyTest):
         if customerCode == '' or self.db.isConsExist(customerCode):
             function.insert_img(self.driver, 'add_customer_exist.jpg')
             raise AssertionError("该客户代码已存在或者客户代码为空")  # assert显示失败为F,其他异常为E
-        else:
-            print(customerCode)
 
-    def test_customer1(self):
-        '''成功添加新客户'''
+    def test2(self):
+        '''添加新客户'''
         self.loginDo()
         num1 = self.db.tableCount('tbl_customer')
         self.po.add_customer(self.newCus)
@@ -47,7 +45,7 @@ class cusInfoTest(myunit.MyTest):
         self.assertEqual(num1 + 1, num2)
         function.insert_img(self.driver, 'add_customer_suc.jpg')
 
-    def test_customer2(self):
+    def test3(self):
         '''禁用客户'''
         self.loginDo()
         self.po.forbiCustomer()  # 禁用客户
@@ -56,7 +54,7 @@ class cusInfoTest(myunit.MyTest):
         self.assertEqual(omslogin(self.driver).error_message(), '该用户已被禁用！')
         function.insert_img(self.driver, 'forbiCustomer.jpg')
 
-    def test_customer3(self):
+    def test4(self):
         '''启用客户'''
         self.loginDo()
         self.po.usingCustomer()  # 启用客户
@@ -65,8 +63,6 @@ class cusInfoTest(myunit.MyTest):
         if omslogin(self.driver).error_message() == '该用户已被禁用！':
             raise AssertionError('启用按钮无效')
             function.insert_img('startCustomer_err.jpg')
-        else:
-            print(omslogin(self.driver).error_message())
 
 if __name__ == '__main__':
     unittest.main()
