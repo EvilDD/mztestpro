@@ -11,4 +11,5 @@ __all__ = [
     'customer_warehouse_css',
     'productAdd_oms',
     'productUpload_oms',
+    'productInventory_css',
 ]

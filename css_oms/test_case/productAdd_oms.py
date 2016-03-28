@@ -45,7 +45,7 @@ class productAdd(myunit.MyTest):
         sleep(0.3)
         proNums2 = self.db.tableCount('tbl_product')  # 添加后商品条数
         self.assertEqual(proNums1 + 1, proNums2)
-        sleep(10.5)  # 等待打印出商品图片
+        sleep(0.5)  # 等待打印出商品图片
         function.insert_img(self.driver, 'oms_add_product.jpg')
 
     def test2(self):

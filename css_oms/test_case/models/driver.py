@@ -5,8 +5,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 def browser():
     '''启动浏览器'''
-    driver = webdriver.PhantomJS()
-    # driver = webdriver.Firefox()
+    # driver = webdriver.PhantomJS()
+    driver = webdriver.Firefox()
     # driver = webdriver.Chrome()
 
     host = '127.0.0.1:4444'  # 运行主机：默认端口号

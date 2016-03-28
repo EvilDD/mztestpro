@@ -1,6 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 # from .base import urls
 '''各界面的url存放'''
@@ -13,6 +11,7 @@ urls = {
     '添加客户交货仓': 'http://zydong.newoms.com/admin/customer/addPayWarehouse',
     '商品新增': 'http://zydong.newoms.com/member/productManage/addProducts',
     '商品批量上传': 'http://zydong.newoms.com/member/productManage/productUpload',
+    '库存管理': 'http://zydong.newoms.com/admin/product/inventory',
 }
 
 
@@ -55,9 +54,6 @@ class Bar(Page):
         menusName = {}  # 一级导航菜单按钮
         menus = self.find_elements(By.CLASS_NAME, 'panel-title')
         for menu in menus:
-            # WebDriverWait(self.driver, 5, 0.5).until(EC.element_to_be_clickable(menu))
-            # menu = WebDriverWait(self.driver, 5, 0.5).until(EC.element_to_be_clickable((By.CLASS_NAME, 'panel-title')))
-            # print(menu.text, menu.get_attribute('innerHTML'))
             menusName[menu.text] = menu
         return menusName[barName]
 

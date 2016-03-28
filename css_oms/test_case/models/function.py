@@ -1,4 +1,3 @@
-from selenium import webdriver
 import os
 import psycopg2
 import re
@@ -19,9 +18,26 @@ def insert_img(driver, file_name):
 
 def stringAddOne(string):
     '''输入一个字符串,返回一个新的+1字符串'''
-    num = re.search('\d*$', string).group(0)
-    num = '0' if num == '' else num
-    num = repr(int(num) + 1)
+    num = re.search('\d*$', string).group(0)  # 分离出字符串结尾的数字
+    if num == '':  # 判断分享出的字符结尾如果没有数字就加个0
+        num = '0'
+    else:
+        zeroNum = ''
+        temNum = 0
+        for char in num:  # 000010
+            if char == '0':
+                temNum += 1
+            else:
+                break
+        for i in range(temNum):  # 返回数字前面的0000
+            zeroNum += '0'
+        numLen1 = len(repr(int(num)))
+        num_add = repr(int(num) + 1)  # 给字符串末尾的数值加1生成新字符 串
+        numLen2 = len(num_add)
+        if numLen1 != numLen2:  # 如X10排在X9后,X100,排除数值加1后生成多位数
+            num += '0'
+        else:
+            num = zeroNum + num_add
     newString = re.sub('\d*$', num, string)
     return newString
 
@@ -93,23 +109,36 @@ class postgreSql(object):
         code = self.cur.fetchone()
         return code[0]
 
+    def InventoryNum(self):
+        # 查询最近更新库存
+        customerCode = self.consOderBy()
+        proSku = self.consOderBy('product_sku', 'tbl_product')
+        order = "select id from tbl_customer where customer_code='%s'" % customerCode
+        self.cur.execute(order)
+        cusId = self.cur.fetchone()[0]
+        order = "select id from tbl_product where product_sku='%s'" % proSku
+        self.cur.execute(order)
+        proId = self.cur.fetchone()[0]
+        order = "select storage from tbl_product_storage where customer_id='%s' and product_id='%s'" % (cusId, proId)
+        self.cur.execute(order)
+        stoNum = self.cur.fetchone()
+        if stoNum is None:
+            return 0
+        return stoNum[0]
+
     def proStringNo(self, col, table):
         # 创建数据库不存在的字符串，如sku，支付单号等
-        # 倒序某列数据然后有数值的+1,没有加字符1
-        sku = self.consOderBy(col, table)  # 最新数据
-        num = re.search('\d*$', sku).group(0)  # 分离出字符串结尾的数字
-        if num == '':  # 判断分享出的字符结尾如果没有数字就加个0
-            num = '0'
-        else:
-            numLen1 = len(num)
-            num_add = repr(int(num) + 1)  # 给字符串末尾的数值加1生成新字符 串
-            numLen2 = len(num_add)
-            if numLen1 != numLen2:  # 如X10排在X9后,X100,排除数值加1后生成多位数
-                num += '0'
-            else:
-                num = num_add
-        newString = re.sub('\d*$', num, sku)
-        return newString
+        newData = self.consOderBy(col, table)  # 最新数据
+        newStr = stringAddOne(newData)
+        return newStr
+
+    def proRecord(self, sku):
+        # 商品备案
+        order = "UPDATE tbl_product SET status=1 WHERE product_sku='%s';\
+                 UPDATE tbl_product_message SET hg_status=40,ciq_status=40 WHERE product_id \
+                 IN (SELECT id FROM tbl_product WHERE product_sku IN('%s'))" % (sku, sku)
+        self.cur.execute(order)
+        self.conn.commit()
 
     def __del__(self):
         self.conn.close()

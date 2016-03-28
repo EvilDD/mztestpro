@@ -5,4 +5,5 @@ allTestNames = (
     customer_warehouse_css.cusWareHouseTest,
     productAdd_oms.productAdd,
     productUpload_oms.productAdd,
+    productInventory_css.proInventory,
 )

@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from .base import Page
 from time import sleep
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class csslogin(Page):
@@ -61,7 +63,7 @@ class csslogin(Page):
 
     # 登录成功,用户名一致
     def user_login_suc(self):
-        sleep(0.3)  # 防止登录成功浏览器没跳转过来
+        WebDriverWait(self.driver, 10, 0.3).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div[2]/span')))
         username = self.find_element(*(By.XPATH, '/html/body/div[1]/div/div/div[2]/span')).text
         username = username.strip('您好： ')
         return username
